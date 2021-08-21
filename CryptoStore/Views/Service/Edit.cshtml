@@ -1,0 +1,58 @@
+﻿@model CryptoStore.ViewModels.ServiceVeiwModel.Edit.EditingViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1><b>Edit</b></h1> 
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceExplain" class="control-label"></label>
+                <input asp-for="ServiceExplain" class="form-control" />
+                <span asp-validation-for="ServiceExplain" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Video" class="control-label"></label>
+                <input asp-for="Video" class="form-control" />
+                <span asp-validation-for="Video" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CryptoToken" class="control-label"></label>
+                <input asp-for="CryptoToken" class="form-control" />
+                <span asp-validation-for="CryptoToken" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalSum" class="control-label"></label>
+                <input asp-for="TotalSum" class="form-control" />
+                <span asp-validation-for="TotalSum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

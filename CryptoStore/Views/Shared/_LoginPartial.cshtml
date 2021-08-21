@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using CryptoStore.Data.Models
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
+@if (SignInManager.IsSignedIn(User))
+{
+    <nav>  
+        <a id="manage" asp-area="Identity" asp-page="/Account/Manage/Index" class="w3-bar-item w3-button w3-padding-large w3-hover-black" title="Manage"><i class="fa fa-fw fa-user"></i>Hello @UserManager.GetUserName(User)!</a>
+    </nav>
+    <nav> 
+        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button id="logout" type="submit" class="w3-bar-item w3-button w3-padding-large w3-hover-black"><i class="fa fa-fw fa-user"></i>Logout</button> 
+        </form>
+    </nav>
+}
+else
+{
+    <nav>
+        <a id="register" asp-area="Identity" asp-page="/Account/Register" class="w3-bar-item w3-button w3-padding-large w3-hover-black"><i class="fa fa-fw fa-user"></i>Register</a>
+    </nav>
+    <nav>
+        <a id="login" asp-area="Identity" asp-page="/Account/Login" class="w3-bar-item w3-button w3-padding-large w3-hover-black"><i class="fa fa-fw fa-user"></i>Login</a>
+    </nav>
+}
+</nav>

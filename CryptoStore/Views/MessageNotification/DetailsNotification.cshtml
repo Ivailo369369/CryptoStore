@@ -1,0 +1,113 @@
+﻿@model IEnumerable<CryptoStore.ViewModels.MessageNotification.MessageNotificationViewModel>
+
+@{
+    ViewData["Title"] = "Details";
+}
+<head>
+    <style>
+* {
+  box-sizing: border-box;
+}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: black;
+  padding: 20px;
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+    </style>
+</head>
+<body>
+    <br />
+    <br />
+    <br />
+    <h2><b>Message Details</b></h2>
+    <br />
+    <div class="container"> 
+        @foreach (var details in Model)
+        {
+        <form action="/action_page.php">
+            <div class="row">
+                <div class="col-25">
+                    <label for="fname"><b>Username</b></label>
+                </div>
+                <div class="col-75">
+                    <input type="text" readonly="readonly" id="fname" name="firstname" value="@details.Username">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="fname"><b>First Name</b></label>
+                </div>
+                <div class="col-75">
+                    <input type="text" readonly="readonly" id="fname" name="firstname" value="@details.FirstName">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="lname"><b>Last Name</b></label> 
+                </div>
+                <div class="col-75">
+                    <input type="text" readonly="readonly" id="lname" name="lastname" value="@details.LastName">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="lname"><b>Email</b></label> 
+                </div>
+                <div class="col-75">
+                    <input type="text" readonly="readonly" id="lname" name="lastname" value="@details.Email">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="lname"><b>Phone</b></label> 
+                </div>
+                <div class="col-75">
+                    <input type="text" readonly="readonly" id="lname" name="lastname" value="@details.Phone">
+                </div>
+            </div>
+        </form> 
+        <div class="row justify-content-between text-grey">
+            <div class="w3-content w3-justify w3-text-grey w3-padding-64">
+                <p>
+                    <b>Message:  @details.Message</b> 
+                </p>
+            </div>
+        </div>
+        }
+    </div>
+
+</body>

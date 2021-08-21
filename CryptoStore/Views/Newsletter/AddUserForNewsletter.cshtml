@@ -1,0 +1,29 @@
+﻿@model CryptoStore.ViewModels.BidingViewModels.AddUserForNewsletterViewModel 
+
+@{
+    ViewData["Title"] = "AddUserForNewsletter";
+}
+<br />
+<br />
+<br />
+<br />
+<body>
+    <div class="w3-container w3-black text-lg-center">
+        <h1><b>Subscribe</b></h1>
+        <p><b>To get special offers and VIP treatment:</b></p> 
+        <form asp-action="AddUserForNewsletter">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Subscribe" class="w3-button w3-red w3-margin-bottom" />
+            </div>
+        </form>
+    </div>
+</body>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

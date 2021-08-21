@@ -1,0 +1,74 @@
+﻿@model IEnumerable<CryptoStore.ViewModels.ServiceVeiwModel.IndexServiceViewModel>
+
+@{
+    ViewData["Title"] = "GetAllServices";
+}
+
+<head>
+    <style>
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
+        .card h1 {
+            background-color:grey;
+        } 
+        .card p {
+            background-color: grey;
+        }
+
+        .card button {
+            border: none;
+            outline: 0;
+            padding: 12px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+
+            .card button:hover {
+                opacity: 0.7;
+            }
+        .header {
+            padding: 100px;
+            font-size: 100px;
+            text-align: center;
+            background-image: url("https://cdn.shopify.com/s/files/1/1737/1965/products/image_8_1024x1024.png?v=1509864203");
+            height: 50%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+    </style>
+</head>
+<div class="header">
+
+</div>
+<body>
+    <h2 style="text-align:center"><b>Services</b></h2>
+    <br />
+    <div class="container"> 
+        <div class="row justify-content-between">
+            @foreach (var service in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="@service.ServiceImage" style="width:100%">
+                        <h1>@service.ServiceName</h1>
+                        <p>@service.Description</p>
+                        <a asp-route-id="@service.Id" asp-controller="Service" asp-action="ServiceDetails">
+                            <p><button>Get Now</button></p>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>

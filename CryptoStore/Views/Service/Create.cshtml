@@ -1,0 +1,59 @@
+﻿@model CryptoStore.ViewModels.BidingViewModels.CreateServiceViewModel 
+
+@{
+    ViewData["Title"] = "Add Service"; 
+}
+<br />
+<br />
+<h1><b>@ViewData["Title"]</b></h1> 
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ServiceName" class="control-label"></label>
+                <input asp-for="ServiceName" class="form-control" />
+                <span asp-validation-for="ServiceName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceImage" class="control-label"></label>
+                <input asp-for="ServiceImage" class="form-control" />
+                <span asp-validation-for="ServiceImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceVideo" class="control-label"></label>
+                <input asp-for="ServiceVideo" class="form-control" />
+                <span asp-validation-for="ServiceVideo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceDescription" class="control-label"></label>
+                <input asp-for="ServiceDescription" class="form-control" />
+                <span asp-validation-for="ServiceDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceExplain" class="control-label"></label>
+                <input asp-for="ServiceExplain" class="form-control" />
+                <span asp-validation-for="ServiceExplain" class="text-danger"></span>
+            </div> 
+            <div class="form-group">
+                <label asp-for="Token" class="control-label"></label>
+                <input asp-for="Token" class="form-control" />
+                <span asp-validation-for="Token" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalSum" class="control-label"></label>
+                <input asp-for="TotalSum" class="form-control" />
+                <span asp-validation-for="TotalSum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

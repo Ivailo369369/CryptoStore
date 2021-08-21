@@ -1,0 +1,115 @@
+﻿@model IEnumerable<CryptoStore.ViewModels.AdministrationViewModel.UserRolesViewModel>
+
+@{
+    ViewData["Title"] = "UserWithRoles";
+} 
+<br />
+<br />
+    <a asp-controller="Newsletter" asp-action="GetAllNewsletters" class="btn btn-group btn-success">Subscribers</a>
+    <a asp-controller="Administration" asp-action="Payments" class="btn btn-group btn-success">Payments</a> 
+    <a asp-controller="Administration" asp-action="Create" class="btn btn-group btn-success">Add Role</a> 
+    <a asp-controller="Service" asp-action="Create" class="btn btn-group btn-success">Add Service</a>
+    <a asp-controller="Resource" asp-action="Create" class="btn btn-group btn-success">Add Resource</a> 
+    <a asp-controller="Partner" asp-action="Add" class="btn btn-group btn-success">Add Partner</a>
+<br />
+<br />
+
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        #myTable {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #ddd;
+            font-size: 18px;
+        }
+
+            #myTable th, #myTable td {
+                text-align: left;
+                padding: 12px;
+            }
+
+            #myTable tr {
+                border-bottom: 1px solid #ddd;
+            }
+
+                #myTable tr.header, #myTable tr:hover {
+                    background-color: black;
+                }
+
+        input[type=text] {
+            width: 130px;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: white;
+            background-image: url('searchicon.png');
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            padding: 12px 20px 12px 40px;
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+        }
+
+            input[type=text]:focus {
+                width: 100%;
+            }
+    </style>
+</head>
+<body>
+
+    <h2><b>Users</b></h2>
+    <form>
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for usernames..." title="Type in a name">
+    </form>
+    <table id="myTable">
+        <tr class="header">
+            <th style="width:60%;">Username</th>
+            <th style="width:40%;">Email</th>
+            <th style="width:40%;">Email Confirmed</th>
+            <th style="width:40%;">Role</th>
+            <th style="width:40%;">Locked</th>
+            <th style="width:40%;">Ban</th>
+            <th style="width:40%;">UnBan</th> 
+        </tr>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Username</td>
+                <td>@user.Email</td>
+                <td>@user.EmailConfirmed</td>
+                <td>@user.RoleName</td> 
+                <td>@user.IsLocked</td> 
+                <td><a asp-route-id="@user.Id" asp-controller="Administration" asp-action="Ban" class="btn btn-danger" role="button">Ban</a></td> 
+                 <td><a asp-route-id="@user.Id" asp-controller="Administration" asp-action="UnBan" class="btn btn-danger" role="button">UnBan</a></td> 
+            </tr>
+
+        }
+    </table>
+
+    <script>
+        function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+
+</body> 

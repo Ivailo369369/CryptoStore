@@ -1,0 +1,106 @@
+﻿@model IEnumerable<CryptoStore.ViewModels.MessageNotification.MessageNotificationViewModel>
+
+@{
+    ViewData["Title"] = "Notifications";
+}
+
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        #myTable {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #ddd;
+            font-size: 18px;
+        }
+
+            #myTable th, #myTable td {
+                text-align: left;
+                padding: 12px;
+            }
+
+            #myTable tr {
+                border-bottom: 1px solid #ddd;
+            }
+
+                #myTable tr.header, #myTable tr:hover {
+                    background-color: black;
+                }
+
+        input[type=text] {
+            width: 130px;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: white;
+            background-image: url('searchicon.png');
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            padding: 12px 20px 12px 40px;
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+        }
+
+            input[type=text]:focus {
+                width: 100%;
+            }
+    </style>
+</head>
+<body>
+    <br />
+    <br />
+    <br />
+    <h2><b>Notifications</b></h2>
+    <br />
+    <form>
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for usernames..." title="Type in a name">
+    </form>
+    <br />
+    <div class="alert">
+        <table id="myTable">
+            <tr class="header">
+                <th style="width:60%;">Username</th>
+                <th style="width:40%;">Email</th>
+                <th style="width:40%;">First Name</th>
+                <th style="width:40%;">Last Name</th>
+                <th style="width:40%;">Read</th>
+                <th style="width:40%;">Close</th>
+            </tr>
+                @foreach (var notifications in Model)
+                {
+                 <tr>
+                    <td>@notifications.Username</td>
+                    <td>@notifications.Email</td>
+                    <td>@notifications.FirstName</td>
+                    <td>@notifications.LastName</td>
+                    <td><a asp-route-id="@notifications.Id" asp-controller="MessageNotification" asp-action="DetailsNotification"><b>Read</b></a></td>
+                    <td><a asp-route-id="@notifications.Id" asp-controller="MessageNotification" asp-action="Clear">Clear</a></td> 
+                  </tr>
+                }
+        </table>
+        </div>
+        <script>
+            function myFunction() {
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[0];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>
+    </body> 

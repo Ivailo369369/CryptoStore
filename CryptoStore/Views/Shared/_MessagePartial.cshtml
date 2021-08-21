@@ -1,0 +1,7 @@
+﻿@using CryptoStore.Infrastructure.Extensions 
+
+@if (TempData.ContainsKey("__Message"))
+{
+    var message = TempData.Get<MessageModel>("__Message"); 
+    <message type="@message.Type" message="@message.Message"></message>     
+} 

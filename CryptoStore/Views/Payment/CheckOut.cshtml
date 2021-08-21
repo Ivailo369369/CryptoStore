@@ -1,0 +1,191 @@
+﻿@model CryptoStore.ViewModels.BidingViewModels.CreatePaymentsVeiwModel
+
+@{
+    ViewData["Title"] = "CheckOut";
+}
+
+<head>
+    <style>
+        body {
+            font-family: Arial;
+            font-size: 17px;
+            padding: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .row {
+            display: -ms-flexbox; /* IE10 */
+            display: flex;
+            -ms-flex-wrap: wrap; /* IE10 */
+            flex-wrap: wrap;
+            margin: 0 -16px;
+        }
+
+        .col-25 {
+            -ms-flex: 25%; /* IE10 */
+            flex: 25%;
+        }
+
+        .col-50 {
+            -ms-flex: 50%; /* IE10 */
+            flex: 50%;
+        }
+
+        .col-75 {
+            -ms-flex: 75%; /* IE10 */
+            flex: 75%;
+        }
+
+        .col-25,
+        .col-50,
+        .col-75 {
+            padding: 0 16px;
+        }
+
+        .container {
+            background-color: black;
+            padding: 5px 20px 15px 20px;
+            border: 1px solid lightgrey;
+            border-radius: 3px;
+        }
+
+        input[type=text] {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        label {
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .icon-container {
+            margin-bottom: 20px;
+            padding: 7px 0;
+            font-size: 24px;
+        }
+
+        .btn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            width: 100%;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 17px;
+        }
+
+            .btn:hover {
+                background-color: #45a049;
+            }
+
+        a {
+            color: black;
+        }
+
+        hr {
+            border: 1px solid lightgrey;
+        }
+
+        span.price {
+            float: right;
+            color: grey;
+        }
+
+        /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+        @@media (max-width: 800px) {
+            .row {
+                flex-direction: column-reverse;
+            }
+
+            .col-25 {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h2><b>@ViewData["Title"]</b></h2> 
+    <p><b>We only accept Bitcoin</b></p>
+    <div class="row">
+        <div class="col-75">
+            <div class="container">
+                <form asp-action="CheckOut">
+
+                    <div class="row">
+                        <div class="col-50">
+
+                            <h3>Personal info</h3>
+                            <label asp-for="Username" class="control-label"><i class="fa fa-user"></i> Username</label>
+                            <input asp-for="Username" readonly="readonly" class="form-control" />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+
+                            <label asp-for="Email" class="control-label"><i class="fa fa-envelope"></i> Email</label>
+                            <input asp-for="Email" class="form-control" placeholder="theGangster369@abv.bg" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+
+                            <label asp-for="PhonenNumber" class="control-label"><i class="fa fa-address-card-o"></i>Phone</label>
+                            <input asp-for="PhonenNumber" class="form-control" placeholder="0893690276" />
+                            <span asp-validation-for="PhonenNumber" class="text-danger"></span>
+
+                            <p><i class="fa fa-fw fa-btc" style="font-size:48px;color:orange"><b>On-Chain</b></i></p>
+                            <div class="col-50">
+                                <img src="https://scontent.fsof10-1.fna.fbcdn.net/v/t1.15752-9/238041664_527634901805275_4146500457087061452_n.png?_nc_cat=109&ccb=1-5&_nc_sid=ae9488&_nc_ohc=8fo53wyBN3QAX9fViDD&_nc_ht=scontent.fsof10-1.fna&oh=0cbadc9f2a25ed2a7c26a9ea6706a7a1&oe=61444622" style="width:62%" />
+                            </div>
+                            <br />
+                        </div>
+
+                        <div class="col-50">
+                            <h3>Payment</h3>
+                            <label for="fname">Accepted Bitcoin</label>
+                            <div class="icon-container">
+                                <i class="fa fa-fw fa-btc" style="color:orange">Bitcoin</i>
+                            </div>
+                            <p><i class="fa fa-flash" style="font-size:48px;color:orange"><b>Lightning Network</b></i></p> 
+                            <img src="https://scontent.fsof10-1.fna.fbcdn.net/v/t1.15752-9/238808299_269020558057190_7687063298508335286_n.png?_nc_cat=102&ccb=1-5&_nc_sid=ae9488&_nc_ohc=sNOP3oYiSHsAX9BbyCq&_nc_ht=scontent.fsof10-1.fna&oh=c24c208fe22bf51be8e99ace26d80df3&oe=61459B8F" style="width:62%">
+                            <br />
+                            <br />
+                            <br />
+                            <p><b>Choose a payment method between: Lightning or On-Chain!</b></p>
+                            <p><b>Scan the QR code and send the bitcoins/satoshi to pay for the given service.</b></p>
+                            <p><b>Once you pay, you will receive an email within half an hour with the service you paid for.</b></p>
+                        </div>
+                    </div>
+                    <div class="col-25">
+                        <div class="container">
+                            <h4><b>Cart</b><span class="price" style="color:black"><i class="fa fa-shopping-cart"></i></span></h4>
+                            <label asp-for="ServiceName" class="control-label"></label>
+                            <input asp-for="ServiceName" readonly="readonly" class="form-control" />
+                            <span asp-validation-for="ServiceName" class="text-danger"></span>
+
+                            <label asp-for="CryptoToken" class="control-label"></label>
+                            <input asp-for="CryptoToken" readonly="readonly" class="form-control" />
+                            <span asp-validation-for="CryptoToken" class="text-danger"></span>
+
+                            <hr>
+                            <label asp-for="TotalSum" class="control-label"></label>
+                            <input asp-for="TotalSum" readonly="readonly" class="form-control" />
+                            <span asp-validation-for="TotalSum" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <input type="submit" value="Checkout" class="btn">
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

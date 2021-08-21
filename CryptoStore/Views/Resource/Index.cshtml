@@ -1,0 +1,124 @@
+﻿@model IEnumerable<CryptoStore.ViewModels.ResourcesViewModel.ResourceDetailsViewModel> 
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Add a gray background color with some padding */
+        body {
+            font-family: Arial;
+            padding: 20px;
+            background: #f1f1f1;
+        }
+
+        /* Header/Blog Title */
+        .header {
+            padding: 100px;
+            font-size: 100px;
+            text-align: center;
+            background-image: url("https://www.forbes.com/advisor/wp-content/uploads/2021/06/bitcoin-06142021.jpeg");
+            height: 50%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Create two unequal columns that floats next to each other */
+        /* Left column */
+        .leftcolumn {
+            float: left;
+            width: 75%;
+        }
+
+        /* Right column */
+        .rightcolumn {
+            float: left;
+            width: 25%;
+            padding-left: 20px;
+        }
+
+        /* Add a card effect for articles */
+        .card {
+            background-color: black;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+        @@media screen and (max-width: 800px) {
+            .leftcolumn, .rightcolumn {
+                width: 100%;
+                padding: 0;
+            }
+        }
+    </style>
+</head> 
+<div class="header">
+</div>
+<body>
+    <div class="row">
+        <div class="leftcolumn">
+            <div class="card">
+                @foreach (var resource in Model)
+                {
+                    <a href="@resource.Hyperlink">
+                        <h2>@resource.Name</h2>
+                    </a>
+                    <a href="@resource.Hyperlink">
+                        <img src="@resource.Image" style="max-width : 200px" />
+                    </a>
+                    <p>@resource.Description</p>
+                    <br />
+                }
+            </div>
+        </div>
+        <div class="rightcolumn">
+            <div class="card">
+                <h2>Bitcoin is hope!</h2>
+                <img src="https://images.cointelegraph.com/images/1434_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDIvMDkxMGJmMDYtOTBmYi00NDY5LTliNTItNmYyMDA4OTU2NDAyLmpwZw==.jpg" />
+                <p>Be financialy litareta and independent!</p>
+            </div>
+            <div class="card">
+                <h3>Popular Posts</h3>
+                <style>
+                    img {
+                        border: 1px solid #ddd;
+                        border-radius: 4px;
+                        padding: 5px;
+                        width: 200px;
+                    }
+                </style>
+                <a href="https://www.hope.com/content/dam/hope-assets/collateral/block-journal_issue-19_nov-2020.pdf">
+                    <img src="https://pbs.twimg.com/media/El_ozvZXEAAG6me.jpg" />
+                </a>
+                <a href="https://breedlove22.medium.com/the-number-zero-and-bitcoin-4c193336db5b">
+                    <img src="https://miro.medium.com/max/750/1*6GNWKQE3E62-bjP6QJ0qxg.png" />
+                </a>
+                <a href="https://www.instagram.com/cryptoofuture/?hl=bg">
+                    <img src="https://time.com/nextadvisor/wp-content/uploads/2021/05/na-what-is-bitcoin.jpg" />
+                </a>
+            </div>
+            <div class="card">
+                <h3>Follow Me</h3>
+                <a href="https://www.instagram.com/cryptoofuture/?hl=bg">
+                    <h6><strong>Instagram - @@cryptoofuture</strong></h6>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</body>

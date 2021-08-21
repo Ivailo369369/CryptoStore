@@ -1,0 +1,81 @@
+﻿@model IEnumerable<CryptoStore.ViewModels.ServiceVeiwModel.ServiceDetailsViewModel>
+
+@{
+    ViewData["Title"] = "ServiceDetails";
+}
+<br />
+<br />
+<title>CryptoFuture</title>
+<style>
+    body, h1, h2, h3, h4, h5 {
+        font-family: "Poppins", sans-serif
+    }
+
+    body {
+        font-size: 16px;
+    }
+
+    .w3-half img {
+        margin-bottom: -6px;
+        margin-top: 16px;
+        opacity: 0.8;
+        cursor: pointer
+    }
+
+        .w3-half img:hover {
+            opacity: 1
+        }
+</style>
+<body>
+
+    <div class="w3-main" style="margin-left:340px;margin-right:40px">
+        @foreach (var service in Model)
+        {
+            <div class="w3-container" style="margin-top:80px" id="showcase">
+                <h1 class="w3-jumbo"><b>@service.Name</b></h1>
+                <hr style="width:50px;border:5px solid red" class="w3-round">
+            </div>
+            <div class="w3-row-padding">
+                <div class="w3-half">
+                    <img src="@service.Image" style="width:100%">
+                </div>
+            </div>
+            <div class="w3-container" style="margin-top:75px">
+                <h1 class="w3-xxxlarge w3-text-red"><b>CryptoFuture.</b></h1>
+                <hr style="width:50px;border:5px solid red" class="w3-round">
+                <p>
+                    <b>@service.Description</b>
+                </p>
+            </div>
+
+            <div clas="container">
+                <h1 class="w3-xxxlarge w3-text-red"><b>Service Package.</b></h1>
+                <hr style="width:50px;border:5px solid red" class="w3-round">
+            </div>
+            <div class="w3-row-padding">
+                <div class="w3-half">
+                    <ul class="w3-ul w3-light-grey w3-center">
+                        <li class="w3-red w3-xlarge w3-padding-32"><b>Each Package Has These Bonuses</b></li>
+                        <li class="w3-padding-16"><b>+ Crypto education(Free)</b></li>
+                        <li class="w3-padding-16"><b>+ Financialy literate(Free)</b></li>
+                        <li class="w3-padding-16"><b>+ Financialy independent(Free)</b></li>
+                        <li class="w3-padding-16"><b>Service:  @service.ServiceExplain</b></li>
+                        <p><b>@service.TotalSum</b> <b>@service.CryptoToken</b></p>
+                        <li class="w3-light-grey w3-padding-24">
+                            <a asp-controller="Payment" asp-action="CheckOut" class="w3-button w3-red w3-padding-large w3-hover-black">
+                                Get now
+                            </a>
+                        </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="w3-light-grey w3-padding-24">
+                                 <a asp-route-id="@service.Id" asp-controller="Service" asp-action="Edit" class="w3-button btn-group w3-red w3-padding-large w3-hover-black">Edit</a>
+                                <a asp-route-id="@service.Id" asp-controller="Service" asp-action="Remove" class="w3-button btn-group w3-red w3-padding-large w3-hover-black">Remove</a> 
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+</body>

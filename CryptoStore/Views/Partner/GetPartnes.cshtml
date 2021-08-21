@@ -1,0 +1,81 @@
+﻿@model IEnumerable<CryptoStore.ViewModels.PartnesViewModel.AllPartnesViewModel>
+
+@{
+    ViewData["Title"] = "Partnes";
+}
+
+<head>
+    <style>
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
+
+            .card h1 {
+                background-color: grey;
+            }
+
+            .card p {
+                background-color: grey;
+            }
+
+            .card button {
+                border: none;
+                outline: 0;
+                padding: 12px;
+                color: white;
+                background-color: #000;
+                text-align: center;
+                cursor: pointer;
+                width: 100%;
+                font-size: 18px;
+            }
+
+                .card button:hover {
+                    opacity: 0.7;
+                }
+
+        .header {
+            padding: 100px;
+            font-size: 100px;
+            text-align: center;
+            background-image: url("https://mantissagroup.com/wp-content/uploads/2020/09/Handshake.jpg");
+            height: 50%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+    </style>
+</head>  
+<div class="header">
+</div>
+
+<body>
+    <h2 style="text-align:center"><b>Partnerships that Power the Intelligent Enterprise</b></h2>
+    <br />
+    <div class="container">
+        <div class="row justify-content-between">
+            @foreach (var partner in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card">
+                        <a href="@partner.Website"> 
+                            <img src="@partner.Logo" style="width:100%">
+                        </a>
+                        <h1>@partner.CompanyName</h1>
+                        <p>@partner.Description</p>
+                        <a href="@partner.Website">
+                            <p><button>Visit Website</button></p>
+                        </a>
+                    </div>
+                    <br />
+                    <br />
+                </div>
+            }
+        </div>
+    </div>
+</body>
