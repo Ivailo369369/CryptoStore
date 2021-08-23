@@ -3,26 +3,25 @@
     using CryptoStore.Infrastructure.Extensions;
     using CryptoStore.Helpers.Messages;
     using CryptoStore.Services.Contracts;
-    using CryptoStore.Validation;
     using CryptoStore.ViewModels.BidingViewModels;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    using static Validation.AdministrationValidation; 
+
     public class PartnerController : Controller
     {
-        private readonly IPartnerService partnerService;
+        private readonly IPartnerService service;
 
-        public PartnerController(IPartnerService partnerService)
-            => this.partnerService = partnerService;
+        public PartnerController(IPartnerService service) => this.service = service; 
 
-        [Authorize(Roles = AdministrationValidation.Admin)]
-        [Authorize(Policy = AdministrationValidation.WritePolicy)]
+        [Authorize(Roles = Admin)]
+        [Authorize(Policy = WritePolicy)]
         [HttpGet]
-        public IActionResult Add()
-            => this.View(); 
+        public IActionResult Add() => this.View(); 
 
-        [Authorize(Roles = AdministrationValidation.Admin)]
-        [Authorize(Policy = AdministrationValidation.WritePolicy)]
+        [Authorize(Roles = Admin)]
+        [Authorize(Policy = WritePolicy)]
         [HttpPost]
         public IActionResult Add(AddPartnersViewModel model)
         {
@@ -31,7 +30,7 @@
                 return this.View(); 
             } 
 
-            this.partnerService.AddPartnersAsync(model);
+            this.service.AddPartnersAsync(model);
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -45,7 +44,7 @@
         [Authorize]
         public IActionResult GetPartnes()
         {
-            var model = this.partnerService.Partnes();
+            var model = this.service.Partnes();
             return this.View(model); 
         }
     } 

@@ -3,22 +3,21 @@
     using CryptoStore.Infrastructure.Extensions;
     using CryptoStore.Helpers.Messages;
     using CryptoStore.Services.Contracts;
-    using CryptoStore.Validation;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
 
+    using static Validation.AdministrationValidation;
+
     public class NewsletterController : Controller
     {
-        private readonly INewsletterService newsletterServiceAsync;
+        private readonly INewsletterService service; 
 
-        public NewsletterController(INewsletterService newsletterServiceAsync)
-            => this.newsletterServiceAsync = newsletterServiceAsync;
+        public NewsletterController(INewsletterService service) => this.service = service; 
 
         [Authorize] 
         [HttpGet] 
-        public IActionResult AddUserForNewsletter()
-            => this.View();
+        public IActionResult AddUserForNewsletter() => this.View();
 
         [Authorize]
         [HttpPost] 
@@ -30,7 +29,7 @@
                 return this.View(); 
             }
 
-            await this.newsletterServiceAsync.AddAsync(email); 
+            await this.service.AddAsync(email); 
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -41,12 +40,11 @@
             return RedirectToAction("Index", "Home"); 
         }
 
-
-        [Authorize(Roles = AdministrationValidation.Admin)]
-        [Authorize(Policy = AdministrationValidation.WritePolicy)]
+        [Authorize(Roles = Admin)]
+        [Authorize(Policy = WritePolicy)]
         public IActionResult GetAllNewsletters()  
         {
-            var model = this.newsletterServiceAsync.AllNewsletters();
+            var model = this.service.AllNewsletters();
             return this.View(model); 
         }
     }

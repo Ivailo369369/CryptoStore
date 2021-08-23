@@ -4,11 +4,12 @@
     using CryptoStore.Helpers.Messages;
     using CryptoStore.Infrastructure.Services;
     using CryptoStore.Services.Contracts;
-    using CryptoStore.Validation;
     using CryptoStore.ViewModels.BidingViewModels;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
+
+    using static Validation.AdministrationValidation;
 
     public class MessageNotificationController : Controller
     {
@@ -54,24 +55,24 @@
             return RedirectToAction("Index", "Home"); 
         }
 
-        [Authorize(Roles = AdministrationValidation.Admin)]
-        [Authorize(Policy = AdministrationValidation.WritePolicy)]
+        [Authorize(Roles = Admin)]
+        [Authorize(Policy = WritePolicy)]
         public IActionResult Notifications()
         {
             var model = this.messageNotificationService.Notification();
             return this.View(model); 
         }
 
-        [Authorize(Roles = AdministrationValidation.Admin)]
-        [Authorize(Policy = AdministrationValidation.WritePolicy)]
+        [Authorize(Roles = Admin)]
+        [Authorize(Policy = WritePolicy)]
         public async Task<IActionResult> DetailsNotification(int id)
         {
             var model = await this.messageNotificationService.DetailsAsync(id);
             return this.View(model);
         }
 
-        [Authorize(Roles = AdministrationValidation.Admin)]
-        [Authorize(Policy = AdministrationValidation.WritePolicy)]
+        [Authorize(Roles = Admin)]
+        [Authorize(Policy = WritePolicy)]
         [HttpGet("Id")] 
         public async Task<IActionResult> Clear(int id) 
         {

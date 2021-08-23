@@ -3,21 +3,20 @@
     using CryptoStore.Infrastructure.Extensions;
     using CryptoStore.Helpers.Messages;
     using CryptoStore.Services.Contracts;
-    using CryptoStore.Validation;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using System.Threading.Tasks; 
+    using System.Threading.Tasks;
 
+    using static Validation.AdministrationValidation;
 
-    [Authorize(Roles = AdministrationValidation.Admin)]  
-    [Authorize(Policy = AdministrationValidation.WritePolicy)] 
+    [Authorize(Roles = Admin)]  
+    [Authorize(Policy = WritePolicy)] 
     public class AdministrationController : Controller 
     {
         private readonly IAdministrationService service; 
         
-        public AdministrationController(IAdministrationService service)
-            => this.service = service;
+        public AdministrationController(IAdministrationService service) => this.service = service;
 
         [HttpGet]
         public IActionResult Create()
