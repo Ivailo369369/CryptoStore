@@ -14,14 +14,15 @@
     [Authorize(Policy = AdministrationValidation.WritePolicy)] 
     public class AdministrationController : Controller 
     {
-        private readonly IAdministrationService administrationService;
-        public AdministrationController(IAdministrationService administrationServiceAsync)
-            => this.administrationService = administrationServiceAsync;
+        private readonly IAdministrationService service; 
+        
+        public AdministrationController(IAdministrationService service)
+            => this.servie = service;
 
         [HttpGet]
         public IActionResult Create()
         {
-            var model = this.administrationService.PrepareForCreate();
+            var model = this.service.PrepareForCreate();
             return this.View(model); 
         } 
 
@@ -32,7 +33,7 @@
             {
                 return this.View();
             }
-            await  this.administrationService.CreateRoleAsync(model);
+            await  this.service.CreateRoleAsync(model);
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -45,19 +46,19 @@
 
         public IActionResult UserWithRoles()
         {
-            var model = this.administrationService.UserRoles(); 
+            var model = this.service.UserRoles(); 
             return this.View(model);
         }
 
         public async Task<IActionResult> Payments()
         {
-            var model = await this.administrationService.PaymentsAsync();
+            var model = await this.service.PaymentsAsync();
             return this.View(model); 
         }
          
         public async Task<IActionResult> Ban(string id) 
         {
-            await this.administrationService.BanAsync(id); 
+            await this.service.BanAsync(id); 
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -70,7 +71,7 @@
 
         public async Task<IActionResult> UnBan(string id)
         {
-            await this.administrationService.UnBanAsync(id);
+            await this.service.UnBanAsync(id);
 
             this.TempData.Put("__Message", new MessageModel()
             {
