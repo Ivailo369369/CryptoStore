@@ -17,7 +17,7 @@
         private readonly IAdministrationService service; 
         
         public AdministrationController(IAdministrationService service)
-            => this.servie = service;
+            => this.service = service;
 
         [HttpGet]
         public IActionResult Create()
