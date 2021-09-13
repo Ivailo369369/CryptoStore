@@ -26,6 +26,7 @@ namespace CryptoStore
                 .AddEmailSender(this.Configuration);
 
             services.AddMvc();
+            services.AddRazorPages();
 
             services.AddHttpContextAccessor();
         }
