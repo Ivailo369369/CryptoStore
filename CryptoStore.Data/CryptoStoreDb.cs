@@ -35,6 +35,7 @@
             {
                 optionsBuilder.UseSqlServer(ConfigurationData.ConnectionString);
             }
+
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -86,6 +87,5 @@
                        }
                    }
                });      
-
     }
 }

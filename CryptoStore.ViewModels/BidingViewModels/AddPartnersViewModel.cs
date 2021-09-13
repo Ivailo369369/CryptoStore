@@ -4,6 +4,7 @@
 
     using static ValidationViewModels.Validation;
     using static ValidationViewModels.Validation.Partner;
+
     public class AddPartnersViewModel
    {
         [Required(ErrorMessage = RequiredField)] 

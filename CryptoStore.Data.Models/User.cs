@@ -7,10 +7,7 @@
 
     public class User : IdentityUser, IEntity
     {
-        public User()
-        {
-            Services = new List<Service>(); 
-        }
+        public User() => Services = new List<Service>();
 
         public DateTime CreatedOn { get; set; }
 

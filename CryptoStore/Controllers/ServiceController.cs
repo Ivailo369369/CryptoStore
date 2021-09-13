@@ -3,28 +3,27 @@
     using CryptoStore.Infrastructure.Extensions;
     using CryptoStore.Helpers.Messages;
     using CryptoStore.Services.Contracts;
-    using CryptoStore.Validation;
     using CryptoStore.ViewModels.BidingViewModels;
     using CryptoStore.ViewModels.ServiceVeiwModel.Edit;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
 
+    using static Infrastructure.WebConstants;
+
     public class ServiceController : Controller
     {
-        private readonly IServicesService serviceAsync;
+        private readonly IServicesService service;
 
-        public ServiceController(IServicesService serviceAsync)
-            => this.serviceAsync = serviceAsync;
+        public ServiceController(IServicesService service) => this.service = service;
 
-        [Authorize(Roles = AdministrationValidation.Admin)] 
-        [Authorize(Policy = AdministrationValidation.WritePolicy)]
+        [Authorize(Roles = Admin)] 
+        [Authorize(Policy = WritePolicy)]
         [HttpGet]
-        public IActionResult Create() 
-            => this.View(); 
+        public IActionResult Create() => this.View(); 
 
-        [Authorize(Roles = AdministrationValidation.Admin)] 
-        [Authorize(Policy = AdministrationValidation.WritePolicy)] 
+        [Authorize(Roles = Admin)] 
+        [Authorize(Policy = WritePolicy)] 
         [HttpPost]
         public async Task<IActionResult> Create(CreateServiceViewModel model)   
         {
@@ -33,7 +32,7 @@
                 return this.View(); 
             }
 
-            await this.serviceAsync.CreateAsync(model);
+            await this.service.CreateAsync(model);
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -46,28 +45,31 @@
 
         public IActionResult GetAllServices()
         {  
-            var model = this.serviceAsync.GetAllServices();
+            var model = this.service.GetAllServices();
+
             return this.View(model); 
         } 
 
         [Authorize] 
         public async Task<IActionResult> ServiceDetails(int id)
         {
-            var model = await this.serviceAsync.ServiceDetailsAsync(id); 
+            var model = await this.service.ServiceDetailsAsync(id); 
+
             return this.View(model);
         }
 
-        [Authorize(Roles = AdministrationValidation.Admin)]
-        [Authorize(Policy = AdministrationValidation.WritePolicy)]
+        [Authorize(Roles = Admin)]
+        [Authorize(Policy = WritePolicy)]
         [HttpGet]  
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await this.serviceAsync.PrepareForEditingAsync(id);
+            var model = await this.service.PrepareForEditingAsync(id);
+
             return this.View(model);
         }
 
-        [Authorize(Roles = AdministrationValidation.Admin)]
-        [Authorize(Policy = AdministrationValidation.WritePolicy)]
+        [Authorize(Roles = Admin)]
+        [Authorize(Policy = WritePolicy)]
         [HttpPost]
         public async Task<IActionResult> Edit(EditingViewModel model)
         {
@@ -76,7 +78,7 @@
                 return this.View(); 
             } 
 
-            await this.serviceAsync.EditAsync(model); 
+            await this.service.EditAsync(model); 
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -89,7 +91,7 @@
 
         public async Task<IActionResult> Remove(int id)
         {
-            await this.serviceAsync.RemoveAsync(id);
+            await this.service.RemoveAsync(id);
 
             this.TempData.Put("__Message", new MessageModel()
             {

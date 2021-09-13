@@ -17,7 +17,8 @@
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<User> userManager;
 
-        public AdministrationService(CryptoStoreDb context, 
+        public AdministrationService(
+            CryptoStoreDb context, 
             RoleManager<IdentityRole> roleManager,
             UserManager<User> userManager)
         {
@@ -26,11 +27,9 @@
             this.userManager = userManager;
         }
 
-        public IdentityRole PrepareForCreate()  
-            => new();
+        public IdentityRole PrepareForCreate() => new();
             
-        public async Task CreateRoleAsync(IdentityRole model)
-            => await this.roleManager.CreateAsync(model); 
+        public async Task CreateRoleAsync(IdentityRole model) => await this.roleManager.CreateAsync(model); 
         
         public IEnumerable<UserRolesViewModel> UserRoles()
         => (from user in context

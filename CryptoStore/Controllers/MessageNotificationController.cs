@@ -4,33 +4,37 @@
     using CryptoStore.Helpers.Messages;
     using CryptoStore.Infrastructure.Services;
     using CryptoStore.Services.Contracts;
-    using CryptoStore.Validation;
     using CryptoStore.ViewModels.BidingViewModels;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
 
+    using static Infrastructure.WebConstants; 
+
     public class MessageNotificationController : Controller
     {
-        private readonly IMessageNotificationService messageNotificationService;
-        private readonly ICurrentUserService currentUserService; 
+        private readonly IMessageNotificationService messageNotification;
+        private readonly ICurrentUserService currentUser;  
 
-        public MessageNotificationController(IMessageNotificationService messageNotificationService,
-            ICurrentUserService currentUserService)
+        public MessageNotificationController(
+            IMessageNotificationService messageNotification,
+            ICurrentUserService currentUser)
         {
-            this.messageNotificationService = messageNotificationService;
-            this.currentUserService = currentUserService;
+            this.messageNotification = messageNotification;
+            this.currentUser = currentUser;
         }
 
         [Authorize] 
         [HttpGet]
         public IActionResult Create()
         {
-            var username = this.currentUserService.GetUsername();
+            var username = this.currentUser.GetUsername();
+
             var model = new CreateMessageViewModel
             {
                 Username = username,           
             };
+
             return this.View(model); 
         }
 
@@ -43,7 +47,7 @@
                 return this.View();
             }
 
-            await this.messageNotificationService.CreateMessageAsyc(model);
+            await this.messageNotification.CreateMessageAsyc(model);
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -54,28 +58,30 @@
             return RedirectToAction("Index", "Home"); 
         }
 
-        [Authorize(Roles = AdministrationValidation.Admin)]
-        [Authorize(Policy = AdministrationValidation.WritePolicy)]
+        [Authorize(Roles = Admin)]
+        [Authorize(Policy = WritePolicy)]
         public IActionResult Notifications()
         {
-            var model = this.messageNotificationService.Notification();
+            var model = this.messageNotification.Notification();
+
             return this.View(model); 
         }
 
-        [Authorize(Roles = AdministrationValidation.Admin)]
-        [Authorize(Policy = AdministrationValidation.WritePolicy)]
+        [Authorize(Roles = Admin)]
+        [Authorize(Policy = WritePolicy)]
         public async Task<IActionResult> DetailsNotification(int id)
         {
-            var model = await this.messageNotificationService.DetailsAsync(id);
+            var model = await this.messageNotification.DetailsAsync(id);
+
             return this.View(model);
         }
 
-        [Authorize(Roles = AdministrationValidation.Admin)]
-        [Authorize(Policy = AdministrationValidation.WritePolicy)]
-        [HttpGet("Id")] 
+        [Authorize(Roles = Admin)]
+        [Authorize(Policy = WritePolicy)]
+        [HttpGet(Id)] 
         public async Task<IActionResult> Clear(int id) 
         {
-            await this.messageNotificationService.ClearAsync(id);
+            await this.messageNotification.ClearAsync(id);
 
             this.TempData.Put("__Message", new MessageModel()
             {

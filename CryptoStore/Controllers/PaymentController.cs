@@ -9,27 +9,30 @@
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
 
-
     public class PaymentController : Controller 
     {
-        private readonly IPaymentService paymentServiceAsync;
-        private readonly ICurrentUserService currentUserService;
-        private readonly IServicesService serviceDetailsService;
-        public PaymentController(IPaymentService paymentServiceAsync,
-            ICurrentUserService currentUserService,
-            IServicesService serviceDetailsService) 
+        private readonly IPaymentService payment;
+        private readonly ICurrentUserService currentUser;
+        private readonly IServicesService serviceDetails;
+
+        public PaymentController(
+            IPaymentService payment,
+            ICurrentUserService currentUser,
+            IServicesService serviceDetails) 
         {
-            this.paymentServiceAsync = paymentServiceAsync;
-            this.currentUserService = currentUserService;
-            this.serviceDetailsService = serviceDetailsService;
+            this.payment = payment;
+            this.currentUser = currentUser;
+            this.serviceDetails = serviceDetails; 
         }  
 
         [Authorize]
         [HttpGet]
         public IActionResult CheckOut()
         {
-            var userObj = this.currentUserService.GetUsername();
-            var serviceDetails = this.serviceDetailsService.GetServiceDetailsForCheckOut();  
+            var userObj = this.currentUser.GetUsername();
+
+            var serviceDetails = this.serviceDetails.GetServiceDetailsForCheckOut();  
+
             var model = new CreatePaymentsVeiwModel
             {
                 Username = userObj,
@@ -50,7 +53,7 @@
                 return this.View();
             } 
 
-            await this.paymentServiceAsync.CheckOutAsync(model); 
+            await this.payment.CheckOutAsync(model); 
 
             this.TempData.Put("__Message", new MessageModel()
             {

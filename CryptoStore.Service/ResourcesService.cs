@@ -13,8 +13,7 @@
     {
         private readonly CryptoStoreDb context;
 
-        public ResourcesService(CryptoStoreDb context)
-            => this.context = context;
+        public ResourcesService(CryptoStoreDb context) => this.context = context;
 
         public async Task AddResourcesAsync(CreateResourceViewModel model)
         {

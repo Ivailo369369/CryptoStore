@@ -12,8 +12,7 @@
     {
         private readonly CryptoStoreDb context;
 
-        public NewsletterService(CryptoStoreDb context)
-            => this.context = context;
+        public NewsletterService(CryptoStoreDb context) => this.context = context;
         
         public async Task AddAsync(string email)
         {

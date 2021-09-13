@@ -3,25 +3,26 @@
     using CryptoStore.Infrastructure.Extensions;
     using CryptoStore.Helpers.Messages;
     using CryptoStore.Services.Contracts;
-    using CryptoStore.Validation;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using System.Threading.Tasks; 
+    using System.Threading.Tasks;
 
+    using static Infrastructure.WebConstants;
 
-    [Authorize(Roles = AdministrationValidation.Admin)]  
-    [Authorize(Policy = AdministrationValidation.WritePolicy)] 
+    [Authorize(Roles = Admin)]  
+    [Authorize(Policy = WritePolicy)] 
     public class AdministrationController : Controller 
     {
-        private readonly IAdministrationService administrationService;
-        public AdministrationController(IAdministrationService administrationServiceAsync)
-            => this.administrationService = administrationServiceAsync;
+        private readonly IAdministrationService administration;
+
+        public AdministrationController(IAdministrationService administration) => this.administration = administration;
 
         [HttpGet]
         public IActionResult Create()
         {
-            var model = this.administrationService.PrepareForCreate();
+            var model = this.administration.PrepareForCreate();
+
             return this.View(model); 
         } 
 
@@ -32,7 +33,8 @@
             {
                 return this.View();
             }
-            await  this.administrationService.CreateRoleAsync(model);
+
+            await  this.administration.CreateRoleAsync(model);
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -45,19 +47,21 @@
 
         public IActionResult UserWithRoles()
         {
-            var model = this.administrationService.UserRoles(); 
+            var model = this.administration.UserRoles(); 
+
             return this.View(model);
         }
 
         public async Task<IActionResult> Payments()
         {
-            var model = await this.administrationService.PaymentsAsync();
+            var model = await this.administration.PaymentsAsync();
+
             return this.View(model); 
         }
          
         public async Task<IActionResult> Ban(string id) 
         {
-            await this.administrationService.BanAsync(id); 
+            await this.administration.BanAsync(id); 
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -70,7 +74,7 @@
 
         public async Task<IActionResult> UnBan(string id)
         {
-            await this.administrationService.UnBanAsync(id);
+            await this.administration.UnBanAsync(id);
 
             this.TempData.Put("__Message", new MessageModel()
             {

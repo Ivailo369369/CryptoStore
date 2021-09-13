@@ -11,12 +11,14 @@
     {
         private readonly CryptoStoreDb context;
 
-        public PaymentService(CryptoStoreDb context)
-            => this.context = context;
+        public PaymentService(CryptoStoreDb context) => this.context = context;
 
         public async Task CheckOutAsync(CreatePaymentsVeiwModel model)
         {
-            var serviceDetails = this.context.Services.FirstOrDefault();
+            var serviceDetails = this.context
+                .Services
+                .FirstOrDefault();
+
             var payment = new Payment()
             {
                 ServiceName = serviceDetails.ServiceName,

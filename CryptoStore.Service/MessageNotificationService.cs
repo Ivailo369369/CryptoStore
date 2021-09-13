@@ -14,12 +14,13 @@
     {
         private readonly CryptoStoreDb context;
 
-        public MessageNotificationService(CryptoStoreDb context)
-            => this.context = context; 
+        public MessageNotificationService(CryptoStoreDb context) => this.context = context; 
 
         public async Task CreateMessageAsyc(CreateMessageViewModel model) 
         {
-            var userObj = this.context.Users.FirstOrDefault(); 
+            var userObj = this.context
+                .Users
+                .FirstOrDefault(); 
 
             var messageNotification = new Notification() 
             {
@@ -68,7 +69,10 @@
 
         public async Task ClearAsync(int id)  
         {
-            var message = await this.context.Notifications.FindAsync(id);
+            var message = await this.context
+                .Notifications
+                .FindAsync(id);
+
             message.IsDeleted = true; 
             await this.context.SaveChangesAsync(); 
         }

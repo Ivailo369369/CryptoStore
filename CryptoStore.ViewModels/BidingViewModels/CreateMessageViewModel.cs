@@ -4,6 +4,7 @@
 
     using static ValidationViewModels.Validation;
     using static ValidationViewModels.Validation.Message;  
+
     public class CreateMessageViewModel
     {
         [Required(ErrorMessage = RequiredField)]  

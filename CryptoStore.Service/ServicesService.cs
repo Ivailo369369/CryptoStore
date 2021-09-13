@@ -6,7 +6,6 @@
     using CryptoStore.ViewModels.BidingViewModels;
     using CryptoStore.ViewModels.ServiceVeiwModel;
     using CryptoStore.ViewModels.ServiceVeiwModel.Edit;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Linq;
@@ -16,8 +15,7 @@
     {
         private readonly CryptoStoreDb context;
 
-        public ServicesService(CryptoStoreDb context)
-            => this.context = context;
+        public ServicesService(CryptoStoreDb context) => this.context = context;
 
         public async Task CreateAsync(CreateServiceViewModel model) 
         {
@@ -69,8 +67,7 @@
             })
             .ToListAsync();
 
-        public Service GetServiceDetailsForCheckOut()
-           => this.context.Services.FirstOrDefault();
+        public Service GetServiceDetailsForCheckOut() => this.context.Services.FirstOrDefault();
 
         public async Task<EditingViewModel> PrepareForEditingAsync(int id)
         {
@@ -111,7 +108,10 @@
 
         public async Task RemoveAsync(int id)
         { 
-            var service = await this.context.Services.FindAsync(id);
+            var service = await this.context
+                .Services
+                .FindAsync(id);
+
             service.IsDeleted = true;
             await this.context.SaveChangesAsync();
         }

@@ -1,14 +1,12 @@
 ﻿namespace CryptoStore.ViewModels.BidingViewModels
 {
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
     using static ValidationViewModels.Validation;
     using static ValidationViewModels.Validation.Service; 
 
     public class CreateServiceViewModel
-    {
-       
+    { 
         [Required(ErrorMessage = RequiredField)] 
         [StringLength(MaxNameLenght,MinimumLength = MinNameLenght)]
         [Display(Name = Name)]   
@@ -34,6 +32,5 @@
         [Required(ErrorMessage = RequiredField)] 
         [Display(Name = Sum)]   
         public double TotalSum { get; set; }
-
     } 
 }

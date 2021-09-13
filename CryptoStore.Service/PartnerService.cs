@@ -13,8 +13,7 @@
     {
         private readonly CryptoStoreDb context;
 
-        public PartnerService(CryptoStoreDb context) 
-            => this.context = context; 
+        public PartnerService(CryptoStoreDb context) => this.context = context; 
 
         public async Task AddPartnersAsync(AddPartnersViewModel model)
         {
