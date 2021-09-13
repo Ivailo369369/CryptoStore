@@ -15,18 +15,16 @@ namespace CryptoStore
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddControllersWithViews();
+            services.AddControllersWithViews();
+            services.AddMvc();
+            services.AddRazorPages();
 
             services
                 .AddDatabase()
                 .AddIdentity()
                 .AddAuthorizations()
                 .AddApplicationServices()
-                .AddEmailSender(this.Configuration);
-
-            services.AddMvc();
-            services.AddRazorPages();
+                .AddEmailSender(this.Configuration);       
 
             services.AddHttpContextAccessor();
         }
@@ -47,7 +45,8 @@ namespace CryptoStore
                 .UseStaticFiles()
                 .UseRouting();
 
-            app.UseAuthentication()
+            app
+                .UseAuthentication()
                 .UseAuthorization();
 
             app.UseEndpoints(endpoints =>
