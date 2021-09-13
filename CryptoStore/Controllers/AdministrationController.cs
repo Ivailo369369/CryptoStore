@@ -8,21 +8,19 @@
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
 
-    using static Infrastructure.WebConstants;
 
     [Authorize(Roles = Admin)]  
     [Authorize(Policy = WritePolicy)] 
     public class AdministrationController : Controller 
     {
-        private readonly IAdministrationService administration;
-
-        public AdministrationController(IAdministrationService administration) => this.administration = administration;
+        private readonly IAdministrationService administrationService;
+        public AdministrationController(IAdministrationService administrationServiceAsync)
+            => this.administrationService = administrationServiceAsync;
 
         [HttpGet]
         public IActionResult Create()
         {
-            var model = this.administration.PrepareForCreate();
-
+            var model = this.administrationService.PrepareForCreate();
             return this.View(model); 
         } 
 
@@ -33,8 +31,7 @@
             {
                 return this.View();
             }
-
-            await  this.administration.CreateRoleAsync(model);
+            await  this.administrationService.CreateRoleAsync(model);
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -47,21 +44,19 @@
 
         public IActionResult UserWithRoles()
         {
-            var model = this.administration.UserRoles(); 
-
+            var model = this.administrationService.UserRoles(); 
             return this.View(model);
         }
 
         public async Task<IActionResult> Payments()
         {
-            var model = await this.administration.PaymentsAsync();
-
+            var model = await this.administrationService.PaymentsAsync();
             return this.View(model); 
         }
          
         public async Task<IActionResult> Ban(string id) 
         {
-            await this.administration.BanAsync(id); 
+            await this.administrationService.BanAsync(id); 
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -74,7 +69,7 @@
 
         public async Task<IActionResult> UnBan(string id)
         {
-            await this.administration.UnBanAsync(id);
+            await this.administrationService.UnBanAsync(id);
 
             this.TempData.Put("__Message", new MessageModel()
             {
