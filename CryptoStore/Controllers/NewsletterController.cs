@@ -7,12 +7,13 @@
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
 
+    using static Infrastructure.WebConstants;
+
     public class NewsletterController : Controller
     {
-        private readonly INewsletterService newsletterServiceAsync;
+        private readonly INewsletterService newsletter;
 
-        public NewsletterController(INewsletterService newsletterServiceAsync)
-            => this.newsletterServiceAsync = newsletterServiceAsync;
+        public NewsletterController(INewsletterService newsletter) => this.newsletter = newsletter;
 
         [Authorize] 
         [HttpGet] 
@@ -27,7 +28,7 @@
                 return this.View(); 
             }
 
-            await this.newsletterServiceAsync.AddAsync(email); 
+            await this.newsletter.AddAsync(email); 
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -42,7 +43,7 @@
         [Authorize(Policy = WritePolicy)]
         public IActionResult GetAllNewsletters()  
         {
-            var model = this.newsletterServiceAsync.AllNewsletters();
+            var model = this.newsletter.AllNewsletters();
             return this.View(model); 
         }
     }

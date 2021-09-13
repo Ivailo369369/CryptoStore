@@ -9,6 +9,8 @@
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
 
+    using static Infrastructure.WebConstants;
+
     public class MessageNotificationController : Controller
     {
         private readonly IMessageNotificationService messageNotification;
@@ -74,9 +76,9 @@
             return this.View(model);
         }
 
-        [Authorize(Roles = AdministrationValidation.Admin)]
-        [Authorize(Policy = AdministrationValidation.WritePolicy)]
-        [HttpGet("Id")] 
+        [Authorize(Roles = Admin)]
+        [Authorize(Policy = WritePolicy)]
+        [HttpGet(Id)] 
         public async Task<IActionResult> Clear(int id) 
         {
             await this.messageNotification.ClearAsync(id);
