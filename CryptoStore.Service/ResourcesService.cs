@@ -3,8 +3,10 @@
     using CryptoStore.Data;
     using CryptoStore.Data.Models;
     using CryptoStore.Services.Contracts;
+    using CryptoStore.ViewModels.ApiModels.Resource;
     using CryptoStore.ViewModels.BidingViewModels;
     using CryptoStore.ViewModels.ResourcesViewModel;
+    using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -41,5 +43,18 @@
                 Hyperlink = r.Hyperlink
             })
             .ToList();
+
+        public async Task<IEnumerable<ResourceRequestModel>> GetResourcesAsync()
+           => await this.context
+            .Resources
+            .Select(r => new ResourceRequestModel()
+            {
+                Id = r.Id,
+                Name = r.Name,
+                Image = r.Image,
+                Description = r.Description,
+                Hyperlink = r.Hyperlink
+            })
+            .ToListAsync();
     }
 }

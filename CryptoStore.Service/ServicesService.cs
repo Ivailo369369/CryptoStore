@@ -3,6 +3,7 @@
     using CryptoStore.Data;
     using CryptoStore.Data.Models;
     using CryptoStore.Services.Contracts;
+    using CryptoStore.ViewModels.ApiModels.Service;
     using CryptoStore.ViewModels.BidingViewModels;
     using CryptoStore.ViewModels.ServiceVeiwModel;
     using CryptoStore.ViewModels.ServiceVeiwModel.Edit;
@@ -76,12 +77,12 @@
             var model = new EditingViewModel()
             {
                 Id = service.Id, 
-                Name = service.ServiceName, 
-                Description = service.Description,
+                ServiceName = service.ServiceName, 
+                ServiceDescription = service.Description,
                 ServiceExplain = service.ServiceExplain,
-                Image = service.ServiceImage, 
-                Video = service.ServiceVideo, 
-                CryptoToken = service.CryptoTokens, 
+                ServiceImage = service.ServiceImage, 
+                ServiceVideo = service.ServiceVideo, 
+                Token = service.CryptoTokens, 
                 TotalSum = service.TotalSum
             };
 
@@ -93,12 +94,12 @@
             var service = new Service()
             {
                 Id = model.Id, 
-                ServiceName = model.Name, 
-                Description = model.Description, 
+                ServiceName = model.ServiceName, 
+                Description = model.ServiceDescription, 
                 ServiceExplain = model.ServiceExplain, 
-                ServiceImage = model.Image, 
-                ServiceVideo = model.Video,
-                CryptoTokens = model.CryptoToken, 
+                ServiceImage = model.ServiceImage, 
+                ServiceVideo = model.ServiceVideo,
+                CryptoTokens = model.Token, 
                 TotalSum = model.TotalSum
             };
 
@@ -115,5 +116,37 @@
             service.IsDeleted = true;
             await this.context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<ServiceRequestModel>> GetServicesAsync()
+            => await this.context
+            .Services
+            .Select(s => new ServiceRequestModel()
+            {
+                Id = s.Id,
+                ServiceName = s.ServiceName,
+                ServiceImage = s.ServiceImage,
+                ServiceVideo = s.ServiceVideo,
+                Description = s.Description,
+                CryptoToken = s.CryptoTokens,
+                TotalSum = s.TotalSum
+            })
+            .ToListAsync();
+
+        public async Task<IEnumerable<ServiceDetailsRequestModel>> DetailsAsync(int id)
+            => await this.context
+            .Services
+            .Where(s => s.Id == id)
+            .Select(s => new ServiceDetailsRequestModel()
+            {
+                Id = s.Id,
+                Name = s.ServiceName,
+                Description = s.Description,
+                ServiceExplain = s.ServiceExplain,
+                Image = s.ServiceImage,
+                Video = s.ServiceVideo,
+                CryptoToken = s.CryptoTokens,
+                TotalSum = s.TotalSum
+            })
+            .ToArrayAsync(); 
     }
 }

@@ -1,13 +1,17 @@
 ﻿namespace CryptoStore.Services.Contracts
 {
+    using CryptoStore.ViewModels.ApiModels.Newsletter;
+    using CryptoStore.ViewModels.BidingViewModels;
     using CryptoStore.ViewModels.NewsletterViewModel;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public interface INewsletterService 
     {
-        Task AddAsync(string email);  
+        Task AddAsync(AddUserForNewsletterViewModel model);  
 
-        IEnumerable<NewsletterDetailsViewModel> AllNewsletters(); 
+        IEnumerable<NewsletterDetailsViewModel> AllNewsletters();
+
+        Task<Result> AddAsync(NewsletterRequestModel model);
     } 
 }

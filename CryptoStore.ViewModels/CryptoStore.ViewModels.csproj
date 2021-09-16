@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ApiModels\Message.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CryptoStore.Data.Models\CryptoStore.Data.Models.csproj" />
   </ItemGroup>
 

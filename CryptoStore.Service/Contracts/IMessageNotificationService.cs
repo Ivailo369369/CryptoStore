@@ -1,5 +1,6 @@
 ﻿namespace CryptoStore.Services.Contracts
 {
+    using CryptoStore.ViewModels.ApiModels.Message;
     using CryptoStore.ViewModels.BidingViewModels;
     using CryptoStore.ViewModels.MessageNotification;
     using System.Collections.Generic;
@@ -13,6 +14,8 @@
 
         Task<IEnumerable<MessageNotificationViewModel>> DetailsAsync(int id);
 
-        Task ClearAsync(int id); 
+        Task ClearAsync(int id);
+
+        Task<Result> CreateAsync(MessageRequestModel model, string userId, string username); 
     }
 }

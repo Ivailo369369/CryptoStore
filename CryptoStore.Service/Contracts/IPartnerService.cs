@@ -1,5 +1,6 @@
 ﻿namespace CryptoStore.Services.Contracts
 {
+    using CryptoStore.ViewModels.ApiModels.Partner;
     using CryptoStore.ViewModels.BidingViewModels;
     using CryptoStore.ViewModels.PartnesViewModel;
     using System.Collections.Generic;
@@ -9,6 +10,8 @@
     {
         Task AddPartnersAsync(AddPartnersViewModel model);
 
-        IEnumerable<AllPartnesViewModel> Partnes();
+        IEnumerable<AllPartnesViewModel> Partnes(); 
+
+        Task<IEnumerable<PartnerRequestModel>> PartnersAsync();  
     }
 }

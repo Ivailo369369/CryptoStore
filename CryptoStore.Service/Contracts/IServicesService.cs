@@ -1,6 +1,7 @@
 ﻿namespace CryptoStore.Services.Contracts
 {
     using CryptoStore.Data.Models;
+    using CryptoStore.ViewModels.ApiModels.Service;
     using CryptoStore.ViewModels.BidingViewModels;
     using CryptoStore.ViewModels.ServiceVeiwModel;
     using CryptoStore.ViewModels.ServiceVeiwModel.Edit;
@@ -21,7 +22,10 @@
 
         Task EditAsync(EditingViewModel model);
 
-        Task RemoveAsync(int id); 
+        Task RemoveAsync(int id);
 
+        Task<IEnumerable<ServiceRequestModel>> GetServicesAsync();
+
+        Task<IEnumerable<ServiceDetailsRequestModel>> DetailsAsync(int id); 
     }
 }

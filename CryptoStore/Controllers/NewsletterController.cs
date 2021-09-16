@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
+    using CryptoStore.ViewModels.BidingViewModels;
 
     using static Infrastructure.WebConstants;
 
@@ -21,14 +22,14 @@
 
         [Authorize]
         [HttpPost] 
-        public async Task<IActionResult> AddUserForNewsletter(string email)
+        public async Task<IActionResult> AddUserForNewsletter(AddUserForNewsletterViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return this.View(); 
             }
 
-            await this.newsletter.AddAsync(email); 
+            await this.newsletter.AddAsync(model);  
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -43,7 +44,8 @@
         [Authorize(Policy = WritePolicy)]
         public IActionResult GetAllNewsletters()  
         {
-            var model = this.newsletter.AllNewsletters();
+            var model = this.newsletter.AllNewsletters(); 
+
             return this.View(model); 
         }
     }

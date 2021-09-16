@@ -13,7 +13,7 @@
 
     public class ServiceController : Controller
     {
-        private readonly IServicesService serviceAsync;
+        private readonly IServicesService service;
 
         public ServiceController(IServicesService service) => this.service = service;
 
@@ -45,14 +45,14 @@
 
         public IActionResult GetAllServices()
         {  
-            var model = this.serviceAsync.GetAllServices();
+            var model = this.service.GetAllServices();
             return this.View(model); 
         } 
 
         [Authorize] 
         public async Task<IActionResult> ServiceDetails(int id)
         {
-            var model = await this.serviceAsync.ServiceDetailsAsync(id); 
+            var model = await this.service.ServiceDetailsAsync(id); 
             return this.View(model);
         }
 
@@ -61,7 +61,7 @@
         [HttpGet]  
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await this.serviceAsync.PrepareForEditingAsync(id);
+            var model = await this.service.PrepareForEditingAsync(id);
             return this.View(model);
         }
 

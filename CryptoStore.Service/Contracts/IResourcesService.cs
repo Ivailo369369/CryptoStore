@@ -1,5 +1,6 @@
 ﻿namespace CryptoStore.Services.Contracts
 {
+    using CryptoStore.ViewModels.ApiModels.Resource;
     using CryptoStore.ViewModels.BidingViewModels;
     using CryptoStore.ViewModels.ResourcesViewModel;
     using System.Collections.Generic;
@@ -9,6 +10,8 @@
     {
         Task AddResourcesAsync(CreateResourceViewModel model); 
 
-        IEnumerable<ResourceDetailsViewModel> GetAllResources(); 
+        IEnumerable<ResourceDetailsViewModel> GetAllResources();
+
+        Task<IEnumerable<ResourceRequestModel>> GetResourcesAsync();
     }
 }

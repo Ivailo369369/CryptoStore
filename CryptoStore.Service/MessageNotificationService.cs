@@ -3,6 +3,7 @@
     using CryptoStore.Data;
     using CryptoStore.Data.Models;
     using CryptoStore.Services.Contracts;
+    using CryptoStore.ViewModels.ApiModels.Message;
     using CryptoStore.ViewModels.BidingViewModels;
     using CryptoStore.ViewModels.MessageNotification;
     using Microsoft.EntityFrameworkCore;
@@ -75,6 +76,30 @@
 
             message.IsDeleted = true; 
             await this.context.SaveChangesAsync(); 
+        }
+
+        public async Task<Result> CreateAsync(MessageRequestModel model, string userId, string username)
+        {
+            var message = new Notification()
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                UserId = userId,
+                Username = username,
+                Email = model.Email,
+                Phone = model.Phone,
+                Message = model.Message
+            };
+
+            if (message == null)
+            {
+                return "You can't send a message";
+            }
+
+            await this.context.AddAsync(message);
+            await this.context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

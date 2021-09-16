@@ -24,7 +24,10 @@ namespace CryptoStore
                 .AddIdentity()
                 .AddAuthorizations()
                 .AddApplicationServices()
-                .AddEmailSender(this.Configuration);       
+                .AddSwagger()
+                .AddApiControllers(); 
+                
+            services.AddEmailSender(this.Configuration);    
 
             services.AddHttpContextAccessor();
         }
@@ -39,25 +42,24 @@ namespace CryptoStore
             app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
 
-            app.UseHttpsRedirection();
-
             app
+                .UseSwaggerUI()
                 .UseStaticFiles()
-                .UseRouting();
-
-            app
+                .UseRouting()
+                .UseCors(options => options
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod())
                 .UseAuthentication()
-                .UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
-            });
-
-            app.ApplyMigrations();
+                .UseAuthorization()
+                 .UseEndpoints(endpoints =>
+                 {
+                     endpoints.MapControllerRoute(
+                         name: "default",
+                         pattern: "{controller=Home}/{action=Index}/{id?}");
+                     endpoints.MapRazorPages();
+                 })
+                 .ApplyMigrations();       
         }
     }
 }
