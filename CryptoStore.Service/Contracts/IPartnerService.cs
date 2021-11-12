@@ -1,12 +1,14 @@
 ﻿namespace CryptoStore.Services.Contracts
 {
-    using CryptoStore.ViewModels.ApiModels.Partner;
-    using CryptoStore.ViewModels.BidingViewModels;
-    using CryptoStore.ViewModels.PartnesViewModel;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public interface IPartnerService 
+    using CryptoStore.Services.ServicesType;
+    using CryptoStore.ViewModels.ApiModels.Partner;
+    using CryptoStore.ViewModels.BidingViewModels;
+    using CryptoStore.ViewModels.PartnesViewModel;
+
+    public interface IPartnerService : IService
     {
         Task AddPartnersAsync(AddPartnersViewModel model);
 

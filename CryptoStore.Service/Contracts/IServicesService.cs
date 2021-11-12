@@ -1,14 +1,17 @@
 ﻿namespace CryptoStore.Services.Contracts
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     using CryptoStore.Data.Models;
+    using CryptoStore.Services.ServicesType;
     using CryptoStore.ViewModels.ApiModels.Service;
     using CryptoStore.ViewModels.BidingViewModels;
     using CryptoStore.ViewModels.ServiceVeiwModel;
     using CryptoStore.ViewModels.ServiceVeiwModel.Edit;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
 
-    public interface IServicesService 
+
+    public interface IServicesService : IService
     {
         Task CreateAsync(CreateServiceViewModel model); 
 

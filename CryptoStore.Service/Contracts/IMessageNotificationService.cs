@@ -1,12 +1,14 @@
 ﻿namespace CryptoStore.Services.Contracts
 {
-    using CryptoStore.ViewModels.ApiModels.Message;
-    using CryptoStore.ViewModels.BidingViewModels;
-    using CryptoStore.ViewModels.MessageNotification;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public interface IMessageNotificationService  
+    using CryptoStore.Services.ServicesType;
+    using CryptoStore.ViewModels.ApiModels.Message;
+    using CryptoStore.ViewModels.BidingViewModels;
+    using CryptoStore.ViewModels.MessageNotification;
+
+    public interface IMessageNotificationService : IService
     {
         Task CreateMessageAsyc(CreateMessageViewModel model);
 

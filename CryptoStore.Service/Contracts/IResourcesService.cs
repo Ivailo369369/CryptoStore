@@ -1,12 +1,14 @@
 ﻿namespace CryptoStore.Services.Contracts
 {
-    using CryptoStore.ViewModels.ApiModels.Resource;
-    using CryptoStore.ViewModels.BidingViewModels;
-    using CryptoStore.ViewModels.ResourcesViewModel;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public interface IResourcesService 
+    using CryptoStore.Services.ServicesType;
+    using CryptoStore.ViewModels.ApiModels.Resource;
+    using CryptoStore.ViewModels.BidingViewModels;
+    using CryptoStore.ViewModels.ResourcesViewModel;
+
+    public interface IResourcesService : IService
     {
         Task AddResourcesAsync(CreateResourceViewModel model); 
 

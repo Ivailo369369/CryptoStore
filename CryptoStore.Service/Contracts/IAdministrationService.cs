@@ -1,11 +1,14 @@
 ﻿namespace CryptoStore.Services.Contracts
 {
-    using CryptoStore.ViewModels.AdministrationViewModel;
-    using Microsoft.AspNetCore.Identity;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public interface IAdministrationService
+    using Microsoft.AspNetCore.Identity;
+
+    using CryptoStore.Services.ServicesType;
+    using CryptoStore.ViewModels.AdministrationViewModel;
+
+    public interface IAdministrationService : IService
     {
         IdentityRole PrepareForCreate();
 

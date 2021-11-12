@@ -1,10 +1,12 @@
 ﻿namespace CryptoStore.Services.Contracts
 {
-    using CryptoStore.ViewModels.ApiModels.Payment;
-    using CryptoStore.ViewModels.BidingViewModels;
     using System.Threading.Tasks;
 
-    public interface IPaymentService
+    using CryptoStore.Services.ServicesType;
+    using CryptoStore.ViewModels.ApiModels.Payment;
+    using CryptoStore.ViewModels.BidingViewModels;
+
+    public interface IPaymentService : IService
     { 
         Task CheckOutAsync(CreatePaymentsVeiwModel model);
 

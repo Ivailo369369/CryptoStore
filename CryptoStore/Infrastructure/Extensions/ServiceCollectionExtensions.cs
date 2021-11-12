@@ -1,12 +1,8 @@
 ﻿namespace CryptoStore.Infrastructure.Extensions
 {
-    using CryptoStore.Data;
-    using CryptoStore.Data.Models;
-    using CryptoStore.Infrastructure.Filters;
-    using CryptoStore.Infrastructure.Services;
-    using CryptoStore.Services;
-    using CryptoStore.Services.Contracts;
-    using CryptoStore.Services.EmailService;
+    using System.Text;
+    using System.Linq;
+
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.UI.Services;
@@ -15,7 +11,14 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
-    using System.Text;
+
+    using CryptoStore.Data;
+    using CryptoStore.Data.Models;
+    using CryptoStore.Infrastructure.Filters;
+    using CryptoStore.Services;
+    using CryptoStore.Services.EmailService;
+    using CryptoStore.Services.ServicesType;
+
     using static Infrastructure.WebConstants;
 
     public static class ServiceCollectionExtensions
@@ -66,17 +69,42 @@
                        builder => builder.RequireRole(Admin));
                 });
 
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
-         => services
-                 .AddScoped<IServicesService, ServicesService>()
-                 .AddScoped<IAdministrationService, AdministrationService>()
-                 .AddScoped<IResourcesService, ResourcesService>()
-                 .AddScoped<INewsletterService, NewsletterService>()
-                 .AddScoped<IPaymentService, PaymentService>()
-                 .AddScoped<ICurrentUserService, CurrentUserService>()
-                 .AddScoped<IMessageNotificationService, MessageNotificationService>()
-                 .AddScoped<IPartnerService, PartnerService>()
-                 .AddTransient<IIdentityService, IdentityService>();
+        public static IServiceCollection AddApplicationServices(
+            this IServiceCollection services)
+        {
+            var serviceInterfaceType = typeof(IService);
+            var singletonServiceInterfaceType = typeof(ISingletonService);
+            var scopedServiceInterfaceType = typeof(IScopedService);
+
+            var types = serviceInterfaceType
+                .Assembly
+                .GetExportedTypes()
+                .Where(t => t.IsClass && !t.IsAbstract)
+                .Select(t => new
+                {
+                    Service = t.GetInterface($"I{t.Name}"),
+                    Implementation = t,
+                })
+                .Where(t => t.Service != null);
+
+            foreach (var type in types)
+            {
+                if (serviceInterfaceType.IsAssignableFrom(type.Service))
+                {
+                    services.AddTransient(type.Service, type.Implementation);
+                }
+                else if (scopedServiceInterfaceType.IsAssignableFrom(type.Service))
+                {
+                    services.AddScoped(type.Service, type.Implementation);
+                }
+                else if (singletonServiceInterfaceType.IsAssignableFrom(type.Service))
+                {
+                    services.AddSingleton(type.Service, type.Implementation);
+                }
+            }
+
+            return services;
+        }
 
         public static SendGridOptions AddEmailSender(
             this IServiceCollection services,

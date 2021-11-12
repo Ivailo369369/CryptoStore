@@ -1,6 +1,8 @@
 ﻿namespace CryptoStore.Infrastructure.Services  
 {
-    public interface ICurrentUserService
+    using CryptoStore.Services.ServicesType;
+
+    public interface ICurrentUserService : IScopedService
     {
         string GetUsername();
 
